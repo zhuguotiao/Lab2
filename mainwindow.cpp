@@ -45,14 +45,14 @@ MainWindow::MainWindow(QWidget *parent)
     QPlainTextEdit::LineWrapMode mode=ui->textEdit->lineWrapMode();
     if(mode==QTextEdit::NoWrap){
         ui->textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-        ui->actionWrap->setCheckable(false);
+        ui->actionWrap->setChecked(true);
     }else{
         ui->textEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
-        ui->actionWrap->setCheckable(true);
+        ui->actionWrap->setChecked(false);
     }
 
-
-
+    ui->actionToolbar->setChecked(true);
+    ui->actionStatusBar->setChecked(true);
 }
 
 MainWindow::~MainWindow()
@@ -313,10 +313,10 @@ void MainWindow::on_actionWrap_triggered()
     QPlainTextEdit::LineWrapMode mode=ui->textEdit->lineWrapMode();
     if(mode==QTextEdit::NoWrap){
         ui->textEdit->setLineWrapMode(QPlainTextEdit::WidgetWidth);
-        ui->actionWrap->setCheckable(true);
+        ui->actionWrap->setChecked(true);
     }else{
         ui->textEdit->setLineWrapMode(QPlainTextEdit::NoWrap);
-        ui->actionWrap->setCheckable(false);
+        ui->actionWrap->setChecked(false);
     }
 }
 
@@ -327,6 +327,36 @@ void MainWindow::on_actionFont_triggered()
     QFont font=QFontDialog::getFont(&ok,this);
     if(ok){
         ui->textEdit->setFont(font);
+    }
+}
+
+
+void MainWindow::on_actionToolbar_triggered()
+{
+    bool visible=ui->toolBar1->isVisible();
+    ui->toolBar1->setVisible(!visible);
+    ui->actionToolbar->setChecked(!visible);
+}
+
+
+void MainWindow::on_actionStatusBar_triggered()
+{
+    bool visible=ui->statusbar->isVisible();
+    ui->statusbar->setVisible(!visible);
+    ui->actionStatusBar->setChecked(!visible);
+}
+
+
+void MainWindow::on_actionSelectAll_triggered()
+{
+    ui->textEdit->selectAll();
+}
+
+
+void MainWindow::on_action_Exit_triggered()
+{
+    if(userEditConfirmed()){
+        exit(0);
     }
 }
 
