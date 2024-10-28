@@ -22,12 +22,30 @@ private slots:
 
     void on_actionReplace_triggered();
 
+    void on_actionNew_triggered();
+
+    void on_actionOpen_triggered();
+
+    void on_actionSave_triggered();
+
+    void on_actionSaveAs_triggered();
+
+    void on_textEdit_textChanged();
+
 private:
     Ui::MainWindow *ui;
 
     //添加下面的状态栏，显示行号
     QLabel statusCursorLabel;
     QLabel statusLabel;
+
+    QString filePath;
+
+    //记录文本框
+    bool textChanged;
+
+    bool userEditConfirmed();
+
 
 };
 #endif // MAINWINDOW_H
