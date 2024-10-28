@@ -62,6 +62,11 @@
     <addaction name="actionCut"/>
     <addaction name="actionCopy"/>
     <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind"/>
+    <addaction name="actionReplace"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelectAll"/>
    </widget>
    <widget class="QMenu" name="menu_O">
     <property name="title">
@@ -122,7 +127,7 @@
    <addaction name="actionCopy"/>
    <addaction name="actionPaste"/>
    <addaction name="separator"/>
-   <addaction name="actionReplace"/>
+   <addaction name="actionFind"/>
    <addaction name="actionFont"/>
    <addaction name="actionLineNumber"/>
    <addaction name="actionWrap"/>

@@ -17,5 +17,6 @@
         <file>img/Paste.svg</file>
         <file>img/StatusBar.svg</file>
         <file>img/ToolBar.svg</file>
+        <file>img/Note.svg</file>
     </qresource>
 </RCC>
