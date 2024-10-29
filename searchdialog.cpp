@@ -21,6 +21,10 @@ void SearchDialog::on_btFindNext_clicked()
     QString target=ui->searchText->text();
     QString text=pTextEdit->toPlainText();
 
+    if(target==""||pTextEdit==nullptr){
+        return;
+    }
+
     QTextCursor c=pTextEdit->textCursor();
     int index=-1;
     if(ui->rbDown->isChecked()){
