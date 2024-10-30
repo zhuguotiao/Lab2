@@ -9,6 +9,7 @@
 #include"QTextStream"
 #include"QMessageBox"
 #include"QFontDialog"
+#include<QDebug>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -53,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->actionToolbar->setChecked(true);
     ui->actionStatusBar->setChecked(true);
+
+    connect(ui->actionLineNumber,SIGNAL(triggered(bool)),ui->textEdit,SLOT(showLineNumberArea(bool)));
+
 }
 
 MainWindow::~MainWindow()
@@ -81,7 +85,7 @@ void MainWindow::on_actionReplace_triggered()
     dlg.exec();
 }
 
-
+//新建文件
 void MainWindow::on_actionNew_triggered()
 {
     if(!userEditConfirmed()){
@@ -97,7 +101,7 @@ void MainWindow::on_actionNew_triggered()
 
 }
 
-
+//打开文件
 void MainWindow::on_actionOpen_triggered()
 {
     if(!userEditConfirmed()){
@@ -122,7 +126,7 @@ void MainWindow::on_actionOpen_triggered()
     textChanged=false;
 }
 
-
+//保存文件
 void MainWindow::on_actionSave_triggered()
 {
     if(filePath==""){
@@ -157,7 +161,7 @@ void MainWindow::on_actionSave_triggered()
     textChanged=false;
 }
 
-
+//另存文件
 void MainWindow::on_actionSaveAs_triggered()
 {
     QString filename=QFileDialog::getSaveFileName(this,"保存文件",".",tr("Text files(*.txt)"));
@@ -229,43 +233,44 @@ bool MainWindow::userEditConfirmed()
     return true;
 }
 
-
+//恢复操作
 void MainWindow::on_actionUndo_triggered()
 {
     ui->textEdit->undo();
 }
 
-
+//剪切操作
 void MainWindow::on_actionCut_triggered()
 {
     ui->textEdit->cut();
     ui->actionPaste->setEnabled(true);
 }
 
-
+//复制操作
 void MainWindow::on_actionCopy_triggered()
 {
     ui->textEdit->copy();
     ui->actionPaste->setEnabled(true);
 }
 
-
+//粘贴操作
 void MainWindow::on_actionPaste_triggered()
 {
     ui->textEdit->paste();
 }
 
-
+//撤销操作
 void MainWindow::on_actionRedo_triggered()
 {
     ui->textEdit->redo();
 }
 
+//判断是否恢复
 void MainWindow::on_textEdit_undoAvailable(bool b)
 {
     ui->actionUndo->setEnabled(b);
 }
-
+//判断是否执行复制和剪切
 void MainWindow::on_textEdit_copyAvailable(bool b)
 {
     ui->actionCopy->setEnabled(b);
@@ -273,7 +278,7 @@ void MainWindow::on_textEdit_copyAvailable(bool b)
 
 }
 
-
+//判断是否执行撤销
 void MainWindow::on_textEdit_redoAvailable(bool b)
 {
     ui->actionRedo->setEnabled(b);
@@ -285,7 +290,27 @@ void MainWindow::on_textEdit_redoAvailable(bool b)
 
 void MainWindow::on_actionFontBackgroundColor_triggered()
 {
+    // 打开颜色选择对话框
+        QColor color = QColorDialog::getColor(Qt::white, this, "选择背景颜色");
 
+        // 如果选择的颜色有效
+        if (color.isValid()) {
+            // 获取当前光标
+            QTextCursor cursor = ui->textEdit->textCursor();
+
+            // 如果没有选中任何文本，选择整个文本
+            if (cursor.selectedText().isEmpty()) {
+                cursor.select(QTextCursor::Document);
+            }
+
+            // 设置背景颜色
+            QTextCharFormat format;
+            format.setBackground(color);
+            cursor.mergeCharFormat(format);
+
+            // 更新文本编辑器的内容
+            ui->textEdit->setTextCursor(cursor);
+        }
 }
 
 
@@ -307,10 +332,6 @@ void MainWindow::on_actionFontColor_triggered()
 }
 
 
-void MainWindow::on_actionLineNumber_triggered()
-{
-
-}
 
 
 void MainWindow::on_actionWrap_triggered()
@@ -326,6 +347,8 @@ void MainWindow::on_actionWrap_triggered()
 }
 
 
+
+
 void MainWindow::on_actionFont_triggered()
 {
     bool ok=false;
@@ -338,8 +361,8 @@ void MainWindow::on_actionFont_triggered()
 
 void MainWindow::on_actionToolbar_triggered()
 {
-    bool visible=ui->toolBar1->isVisible();
-    ui->toolBar1->setVisible(!visible);
+    bool visible=ui->toolBar->isVisible();
+    ui->toolBar->setVisible(!visible);
     ui->actionToolbar->setChecked(!visible);
 }
 
@@ -384,4 +407,10 @@ void MainWindow::on_textEdit_cursorPositionChanged()
     statusCursorLabel.setText("Ln: "+QString::number(ln)+"  Col:   "+QString::number(col));
 
 }
+
+
+
+
+
+
 

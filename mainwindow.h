@@ -54,7 +54,6 @@ private slots:
 
     void on_actionFontColor_triggered();
 
-    void on_actionLineNumber_triggered();
 
     void on_actionWrap_triggered();
 
@@ -69,6 +68,9 @@ private slots:
     void on_action_Exit_triggered();
 
     void on_textEdit_cursorPositionChanged();
+
+
+    void on_actionLineNumber_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;
